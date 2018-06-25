@@ -60,3 +60,4 @@ def majorityElement5(nums):
                 res |= 1 << i
     return res
 print(majorityElement5([5,6,7,8,9,5,5,5,5]))
+

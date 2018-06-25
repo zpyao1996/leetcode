@@ -9,6 +9,8 @@ class Solution:
         ans=[]
         for i in s:
             count[i]=count.get(i,0)+1
+        if len(count)==1:
+            return [s]
         for i in count:
             halfnums.extend([i for _ in range(count[i] // 2)])
             if count[i]%2==0:
@@ -24,5 +26,5 @@ class Solution:
         return ans
 
 sol=Solution()
-a="ababc"
+a="aaaaaaaaaaaaaaaaa"
 print(sol.generatePalindromes(a))
