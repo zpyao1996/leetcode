@@ -11,7 +11,6 @@ def getsum(a,b):
     return a if b==0 else getsum(a^b,(a&b)<<1)
 
 print(getsum(15,4))
-
 print(15&4)
 
 #missing number
@@ -21,7 +20,7 @@ def missingnumber(nums):
         ret ^= i
         ret ^= nums[i]
     return ret ^len(nums)
-print(missingnumber([0,2,3,4,5]))
+print('missing number',missingnumber([0,2,3,4,5]))
 
 #largest power of 2 and smaller or equal to the given number N
 def largest_power(N):
