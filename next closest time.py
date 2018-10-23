@@ -1,4 +1,4 @@
-from itertools import product
+from itertools import product, permutations
 import numpy as np
 class Solution:
     def nextClosestTime(self, time):
@@ -28,6 +28,31 @@ class Solution:
             ans = temp
         return '{}{}:{}{}'.format(*ans)
 
+    # cannot duplicate digits
+    def nextClosestTime2(self, time):
+        # brute force
+        """
+        :type time: str
+        :rtype: str
+        """
+        cur = tuple(int(i) for i in time if i != ':')
+        all_candidate = permutations(cur, 4)
+        valid_candidate = [i for i in all_candidate if i[0] * 10 +
+                           i[1] < 24 and i[2] * 10 + i[3] < 60]
+        def convert_to_time(digits):
+            return 10*digits[0]+digits[1], 10*digits[2]+digits[3]
+        def get_time_diff(cur, next_t):
+            cur_h, cur_min = convert_to_time(cur)
+            next_h, next_min = convert_to_time(next_t)
+            if next_h < cur_h or next_h == cur_h and next_min <= cur_min:
+                next_h += 24
+            if next_min < cur_min:
+                next_min += 60
+                next_h -= 1
+            return next_min - cur_min + (next_h - cur_h) * 60
+        time_diffs = [get_time_diff(cur, next_t) for next_t in valid_candidate]
+        idx = np.argmin(time_diffs)
+        return '{}{}:{}{}'.format(*valid_candidate[idx])
 
     def nextClosestTime1(self, time):
         # brute force
@@ -57,4 +82,4 @@ class Solution:
 
 sol = Solution()
 
-print(sol.nextClosestTime('23:59'))
+print(sol.nextClosestTime2('23:59'))
